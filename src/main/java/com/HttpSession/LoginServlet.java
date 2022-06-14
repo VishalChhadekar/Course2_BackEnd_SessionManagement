@@ -1,4 +1,4 @@
-package com.HiddenFormField;
+package com.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,18 +8,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class FirstServlet
+ * Servlet implementation class LoginServlet
  */
-@WebServlet("/FirstServlet")
-public class FirstServlet extends HttpServlet {
+@WebServlet("/LoginServlet")
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public FirstServlet() {
+	public LoginServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -31,19 +32,10 @@ public class FirstServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		String name = request.getParameter("name");
-		out.println("<h1>Hello " + name + " Welcom to Servlet One<h1>");
-//		
-		// Response of first Servlet sent as request to second servlet through hidden
-		// form filed
-
-		// if input type is text: we can see name in box
-//		out.println("" + "<form action = 'SecondServlet'>" + "<input type = 'text' name = 'user_name' value ='" + name
-//				+ "' >" + "<button>Go to second Servlet</button>" + "" + "</form>");
-
-		// if type= hidden; we can not see it
-		out.println("" + "<form action = 'SecondServlet'>" + "<input type = 'hidden' name = 'user_name' value ='" + name
-				+ "' >" + "<button>Go to second Servlet</button>" + "" + "</form>");
+		String userid = request.getParameter("name");// name as userId
+		HttpSession session = request.getSession();
+		session.setAttribute("name", userid);
+		response.sendRedirect("DashboardServlet");
 	}
 
 	/**
